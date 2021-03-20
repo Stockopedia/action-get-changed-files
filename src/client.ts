@@ -1,5 +1,5 @@
 import {GitHub} from '@actions/github/lib/utils'
-import {Context} from '@actions/github/lib/context'
+import {Context} from './options'
 
 export class GithubClient {
   constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
@@ -8,8 +8,8 @@ export class GithubClient {
     try {
       const {data} = await this.octokit.repos.compareCommits({
         ...context.repo,
-        base: context.payload.before,
-        head: context.payload.after
+        base: context.before,
+        head: context.after
       })
 
       return data.files

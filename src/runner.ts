@@ -1,6 +1,6 @@
-import {Context} from '@actions/github/lib/context'
 import {GithubClient} from './client'
 import {File, ICommand, IFormatCommand} from './commands'
+import {Context} from './options'
 
 export const runner = async (
   context: Context,

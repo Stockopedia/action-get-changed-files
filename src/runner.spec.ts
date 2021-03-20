@@ -5,10 +5,8 @@ const testContext = {
     repo: 'TestRepo',
     owner: 'SomeOwner'
   },
-  payload: {
-    before: 'testBeforeSha',
-    after: 'testAfterSha'
-  }
+  before: 'testBeforeSha',
+  after: 'testAfterSha'
 }
 
 const mockGithubClient = {

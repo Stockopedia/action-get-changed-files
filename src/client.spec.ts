@@ -12,10 +12,8 @@ const testContext = {
     repo: 'TestRepo',
     owner: 'SomeOwner'
   },
-  payload: {
-    before: 'testBeforeSha',
-    after: 'testAfterSha'
-  }
+  before: 'testBeforeSha',
+  after: 'testAfterSha'
 }
 
 describe('github client', () => {
@@ -46,8 +44,8 @@ describe('github client', () => {
         expect(commitMock).toHaveBeenCalledWith({
           repo: testContext.repo.repo,
           owner: testContext.repo.owner,
-          base: testContext.payload.before,
-          head: testContext.payload.after
+          base: testContext.before,
+          head: testContext.after
         })
       })
       afterEach(() => {

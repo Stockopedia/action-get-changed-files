@@ -3,6 +3,7 @@ import {context, getOctokit} from '@actions/github'
 import {GithubClient} from './client'
 import {commandFactory, formatFactory} from './commands'
 import {runner} from './runner'
+import {Context} from './options'
 
 type Options = {
   log?: Console
@@ -31,10 +32,28 @@ async function run(): Promise<void> {
 
     const github = getOctokit(token, githubOptions)
 
-    console.log(context)
+    let innerContext: Context
+    switch (context.eventName) {
+      case 'push':
+        innerContext = {
+          repo: context.repo,
+          after: context.payload.after,
+          before: context.payload.before
+        }
+        break
+      case 'pull_request':
+        innerContext = {
+          repo: context.repo,
+          after: context.payload.pull_request!.head.sha,
+          before: context.payload.pull_request!.base.sha
+        }
+        break
+      default:
+        throw new Error('Event type not supported')
+    }
 
     const result = await runner(
-      context,
+      innerContext,
       new GithubClient(github),
       commands,
       formatFactory.make(options.format ?? 'json')

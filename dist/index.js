@@ -25,7 +25,7 @@ class GithubClient {
     getChangedFiles(context) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { data } = yield this.octokit.repos.compareCommits(Object.assign(Object.assign({}, context.repo), { base: context.payload.before, head: context.payload.after }));
+                const { data } = yield this.octokit.repos.compareCommits(Object.assign(Object.assign({}, context.repo), { base: context.before, head: context.after }));
                 return data.files;
             }
             catch (e) {
@@ -336,8 +336,26 @@ function run() {
             };
             const commands = commands_1.commandFactory.make(options);
             const github = github_1.getOctokit(token, githubOptions);
-            console.log(github_1.context);
-            const result = yield runner_1.runner(github_1.context, new client_1.GithubClient(github), commands, commands_1.formatFactory.make((_a = options.format) !== null && _a !== void 0 ? _a : 'json'));
+            let innerContext;
+            switch (github_1.context.eventName) {
+                case 'push':
+                    innerContext = {
+                        repo: github_1.context.repo,
+                        after: github_1.context.payload.after,
+                        before: github_1.context.payload.before
+                    };
+                    break;
+                case 'pull_request':
+                    innerContext = {
+                        repo: github_1.context.repo,
+                        after: github_1.context.payload.pull_request.head.sha,
+                        before: github_1.context.payload.pull_request.base.sha
+                    };
+                    break;
+                default:
+                    throw new Error('Event type not supported');
+            }
+            const result = yield runner_1.runner(innerContext, new client_1.GithubClient(github), commands, commands_1.formatFactory.make((_a = options.format) !== null && _a !== void 0 ? _a : 'json'));
             core.setOutput('changed', result);
         }
         catch (error) {
