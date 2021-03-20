@@ -336,6 +336,7 @@ function run() {
             };
             const commands = commands_1.commandFactory.make(options);
             const github = github_1.getOctokit(token, githubOptions);
+            console.log(github_1.context);
             const result = yield runner_1.runner(github_1.context, new client_1.GithubClient(github), commands, commands_1.formatFactory.make((_a = options.format) !== null && _a !== void 0 ? _a : 'json'));
             core.setOutput('changed', result);
         }
