@@ -14,13 +14,13 @@ export class GithubClient {
 
       return data.files
     } catch (e) {
-      throw new GithubCommitsError()
+      throw new GithubCommitsError(e.message)
     }
   }
 }
 
 export class GithubCommitsError extends Error {
-  constructor() {
-    super('Unable to retrieve commit data from github')
+  constructor(message: string) {
+    super(`Unable to retrieve commit data from github - ${message}`)
   }
 }
