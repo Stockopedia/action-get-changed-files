@@ -29,15 +29,15 @@ class GithubClient {
                 return data.files;
             }
             catch (e) {
-                throw new GithubCommitsError();
+                throw new GithubCommitsError(e.message);
             }
         });
     }
 }
 exports.GithubClient = GithubClient;
 class GithubCommitsError extends Error {
-    constructor() {
-        super('Unable to retrieve commit data from github');
+    constructor(message) {
+        super(`Unable to retrieve commit data from github - ${message}`);
     }
 }
 exports.GithubCommitsError = GithubCommitsError;
