@@ -205,7 +205,7 @@ class IgnoreCommand {
         this.ignore = ignore;
     }
     run(files) {
-        return files.filter(x => !minimatch_1.default(x.filename, this.ignore));
+        return files.filter(x => !minimatch_1.default(x.filename, this.ignore, { dot: true }));
     }
 }
 exports.IgnoreCommand = IgnoreCommand;

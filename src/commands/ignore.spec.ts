@@ -21,7 +21,7 @@ describe('ignore command', () => {
   })
   it('should only return folders not matching supplied glob', () => {
     const files = [{
-      filename: "one"
+      filename: ".one"
     },
     {
       filename: "two"
@@ -29,7 +29,7 @@ describe('ignore command', () => {
     {
       filename: "bla"
     }]
-    expect(new IgnoreCommand("**/+(one|two)").run(files)).toEqual([
+    expect(new IgnoreCommand("**/+(.one|two)").run(files)).toEqual([
     {
       filename: "bla"
     }])
