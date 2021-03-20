@@ -129,10 +129,10 @@ class FormatFactory {
         switch (format) {
             case 'csv':
                 return new _1.CsvFormatCommand();
-            case 'json':
-                return new _1.JsonFormatCommand();
             case 'newline':
                 return new _1.NewlineFormatCommand();
+            default:
+                return new _1.JsonFormatCommand();
         }
     }
 }

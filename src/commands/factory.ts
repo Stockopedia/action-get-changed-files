@@ -33,10 +33,10 @@ class FormatFactory {
     switch(format) {
       case 'csv':
         return new CsvFormatCommand()
-      case 'json':
-        return new JsonFormatCommand()
       case 'newline':
         return new NewlineFormatCommand()
+      default:
+        return new JsonFormatCommand()
     }
   }
 }
