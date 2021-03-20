@@ -1,4 +1,4 @@
-name: 'get-changed-files'
+name: 'get-changed-folders'
 description: 'find changed files/folders on push/pr event'
 author: 'Stockopedia'
 inputs:
