@@ -31,7 +31,7 @@ async function run(): Promise<void> {
 
     const github = getOctokit(token, githubOptions)
 
-console.log(context)
+    console.log(context)
 
     const result = await runner(
       context,
