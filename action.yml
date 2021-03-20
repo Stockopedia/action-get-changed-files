@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'get-changed-folders'
+description: 'find changed files/folders on push/pr event'
+author: 'Stockopedia'
 inputs:
-  milliseconds: # change this
+  github-token:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'github token'
+  format:
+    required: false
+    description: 'output format - either json, csv or separated by line-breaks'
+    default: json
+  foldersOnly:
+    required: false
+    description: 'only output folders'
+    default: "false"
+  ignore:
+    required: false
+    description: 'glob files/folders to ignore'
 runs:
   using: 'node12'
   main: 'dist/index.js'

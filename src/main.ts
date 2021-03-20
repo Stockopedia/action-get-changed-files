@@ -1,19 +1,53 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {context, getOctokit} from '@actions/github'
+import {GithubClient} from './client'
+import {commandFactory, formatFactory} from './commands'
+import {runner} from './runner'
+
+type Options = {
+  log?: Console
+}
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const token = core.getInput('github-token', {required: true})
+    const ignoreGlob = core.getInput('ignore', {required: false})
+    const foldersOnly = core.getInput('foldersOnly', {required: false})
+    const format = core.getInput('format')
+    const debug = core.getInput('debug')
+    const githubOptions: Options = {}
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    if (debug === 'true') {
+      githubOptions.log = console
+    }
 
-    core.setOutput('time', new Date().toTimeString())
+    const options = {
+      foldersOnly: foldersOnly === 'true',
+      ignore: ignoreGlob,
+      format: format as any
+    }
+
+    const commands = commandFactory.make(options)
+
+    const github = getOctokit(token, githubOptions)
+
+    const result = await runner(
+      context,
+      new GithubClient(github),
+      commands,
+      formatFactory.make(options.format ?? 'json')
+    )
+
+    core.setOutput('changed', result)
   } catch (error) {
     core.setFailed(error.message)
   }
 }
 
-run()
+process.on('unhandledRejection', handleError)
+run().catch(handleError)
+
+function handleError(err: any): void {
+  console.error(err)
+  core.setFailed(`Unhandled error: ${err}`)
+}
