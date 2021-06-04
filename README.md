@@ -10,9 +10,9 @@ Get the changes folders/files between the latest commit, and the previous latest
   id: get_changed
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    ignore: "**/*.js" #glob
-    foldersOnly: true #to only include folders int the output
-    format: json #either json, csv of newline
+    ignore: "**/*.js" # glob
+    foldersOnly: true # to only include folders in the output
+    format: json # either json, csv of newline
 - name: Echo
   run: echo ${{ steps.get_changed.outputs.changed }}
 ```
