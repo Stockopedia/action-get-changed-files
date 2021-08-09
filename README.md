@@ -12,7 +12,7 @@ Get the changes folders/files between the latest commit, and the previous latest
     github-token: ${{ secrets.GITHUB_TOKEN }}
     ignore: "**/*.js" # glob
     foldersOnly: true # to only include folders in the output
-    format: json # either json, csv of newline
+    format: json # either json, csv or newline
 - name: Echo
   run: echo ${{ steps.get_changed.outputs.changed }}
 ```
