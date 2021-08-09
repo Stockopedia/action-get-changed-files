@@ -28,8 +28,10 @@ describe('github client', () => {
         }
       })
       const githubMock = {
-        repos: {
-          compareCommits: commitMock
+        rest: {
+          repos: {
+            compareCommits: commitMock
+          }
         }
       }
       beforeEach(async () => {
@@ -56,8 +58,10 @@ describe('github client', () => {
       it('should throw error', async () => {
         await expect(
           new GithubClient({
-            repos: {
-              compareCommits: jest.fn()
+            rest: {
+              repos: {
+                compareCommits: jest.fn()
+              }
             }
           } as any).getChangedFiles(testContext as any)
         ).rejects.toThrowError(GithubCommitsError)

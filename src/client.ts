@@ -1,10 +1,11 @@
 import {GitHub} from '@actions/github/lib/utils'
 import {Context} from './options'
+import {File} from './commands'
 
 export class GithubClient {
   constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
 
-  async getChangedFiles(context: Context) {
+  async getChangedFiles(context: Context): Promise<File[]> {
     try {
       const {data} = await this.octokit.rest.repos.compareCommits({
         ...context.repo,
@@ -12,7 +13,7 @@ export class GithubClient {
         head: context.after
       })
 
-      return data.files
+      return data.files ?? []
     } catch (e) {
       throw new GithubCommitsError(e.message)
     }
