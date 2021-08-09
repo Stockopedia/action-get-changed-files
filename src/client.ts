@@ -6,7 +6,7 @@ export class GithubClient {
 
   async getChangedFiles(context: Context) {
     try {
-      const {data} = await this.octokit.repos.compareCommits({
+      const {data} = await this.octokit.rest.repos.compareCommits({
         ...context.repo,
         base: context.before,
         head: context.after
