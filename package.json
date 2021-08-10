@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/minimatch": "^3.0.3",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.0",
     "@types/node": "^14.14.35",
     "@typescript-eslint/parser": "^4.29.1",
     "@vercel/ncc": "^0.29.0",
