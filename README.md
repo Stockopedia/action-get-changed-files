@@ -6,7 +6,7 @@ Get the changes folders/files between the latest commit, and the previous latest
 
 ```yaml
 
-- uses: Stockopedia/get-changed-files@v1
+- uses: Stockopedia/action-get-changed-files@v1
   id: get_changed
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +33,7 @@ readme.md
 Given an example action defined like
 
 ```yaml
-- uses: Stockopedia/get-changed-files@v1
+- uses: Stockopedia/action-get-changed-files@v1
   id: get_changed
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
