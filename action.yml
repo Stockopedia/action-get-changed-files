@@ -18,5 +18,5 @@ inputs:
     required: false
     description: 'glob files/folders to ignore'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
