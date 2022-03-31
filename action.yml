@@ -8,7 +8,7 @@ inputs:
     description: 'github token'
   format:
     required: false
-    description: 'output format - either json, csv or separated by line-breaks'
+    description: 'output format - either json, csv or newline'
     default: json
   foldersOnly:
     required: false
