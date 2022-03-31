@@ -1,24 +1,27 @@
-import { ICommand } from './command';
-import { Format, Options } from '../options';
-import { GetFoldersCommand, GetFilesCommand, IgnoreCommand, CsvFormatCommand, NewlineFormatCommand, JsonFormatCommand } from '.';
-import { DeduplicateCommand } from './deduplicate';
+import type {ICommand} from './command'
+import type {IFormatCommand} from './format-command'
+import type {Format, Options} from '../options'
+import {
+  GetFoldersCommand,
+  GetFilesCommand,
+  IgnoreCommand,
+  CsvFormatCommand,
+  NewlineFormatCommand,
+  JsonFormatCommand
+} from '.'
+import {DeduplicateCommand} from './deduplicate'
 
 class CommandFactory {
-  constructor() {
-
-  }
-
   make(options: Options): ICommand[] {
     const commands: ICommand[] = []
 
-    if(options.foldersOnly) {
+    if (options.foldersOnly) {
       commands.push(new GetFoldersCommand())
-    }
-    else {
+    } else {
       commands.push(new GetFilesCommand())
     }
 
-    if(options.ignore) {
+    if (options.ignore) {
       commands.push(new IgnoreCommand(options.ignore))
     }
 
@@ -29,8 +32,8 @@ class CommandFactory {
 }
 
 class FormatFactory {
-  make(format: Format) {
-    switch(format) {
+  make(format: Format): IFormatCommand {
+    switch (format) {
       case 'csv':
         return new CsvFormatCommand()
       case 'newline':
@@ -38,6 +41,12 @@ class FormatFactory {
       default:
         return new JsonFormatCommand()
     }
+  }
+
+  static knownFormats = new Set(['csv', 'newline', 'json'])
+
+  isKnownFormat(format: string): format is Format {
+    return FormatFactory.knownFormats.has(format)
   }
 }
 

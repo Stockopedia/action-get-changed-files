@@ -3,11 +3,12 @@ description: 'find changed files/folders on push/pr event'
 author: 'Stockopedia'
 inputs:
   github-token:
-    required: true
+    default: ${{ github.token }}
+    required: false
     description: 'github token'
   format:
     required: false
-    description: 'output format - either json, csv or separated by line-breaks'
+    description: 'output format - either json, csv or newline'
     default: json
   foldersOnly:
     required: false
@@ -17,5 +18,5 @@ inputs:
     required: false
     description: 'glob files/folders to ignore'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

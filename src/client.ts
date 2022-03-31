@@ -13,9 +13,14 @@ export class GithubClient {
         head: context.after
       })
 
+      /* istanbul ignore next */
       return data.files ?? []
     } catch (e) {
-      throw new GithubCommitsError(e.message)
+      if (e instanceof Error) {
+        throw new GithubCommitsError(e.message)
+      }
+      /* istanbul ignore next */
+      throw e
     }
   }
 }
