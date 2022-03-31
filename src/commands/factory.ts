@@ -42,6 +42,12 @@ class FormatFactory {
         return new JsonFormatCommand()
     }
   }
+
+  static knownFormats = new Set(['csv', 'newline', 'json'])
+
+  isKnownFormat(format: string): format is Format {
+    return FormatFactory.knownFormats.has(format)
+  }
 }
 
 export const formatFactory = new FormatFactory()

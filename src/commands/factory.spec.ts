@@ -60,6 +60,13 @@ describe('command factory', () => {
 })
 
 describe('format factory', () => {
+  it.each(['csv', 'json', 'newline'])('should know format: %s', format => {
+    expect(formatFactory.isKnownFormat(format)).toBeTruthy()
+  })
+  it('should not know format: somethingElse', () => {
+    expect(formatFactory.isKnownFormat('somethingElse')).toBeFalsy()
+  })
+
   it('should return csv formatter when csv is requested', () => {
     expect(formatFactory.make('csv')).toBeInstanceOf(CsvFormatCommand)
   })
