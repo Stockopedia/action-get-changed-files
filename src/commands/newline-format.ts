@@ -1,7 +1,7 @@
-import { IFormatCommand } from './format-command';
+import {IFormatCommand} from './format-command'
 
 export class NewlineFormatCommand implements IFormatCommand {
   run(files: string[]): string {
-    return files.join("\n")
+    return files.join('\n')
   }
 }
