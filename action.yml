@@ -3,7 +3,8 @@ description: 'find changed files/folders on push/pr event'
 author: 'Stockopedia'
 inputs:
   github-token:
-    required: true
+    default: ${{ github.token }}
+    required: false
     description: 'github token'
   format:
     required: false
