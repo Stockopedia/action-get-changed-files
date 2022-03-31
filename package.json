@@ -14,7 +14,7 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest --coverage",
-    "all": "npm run build && npm run format && npm run test && npm run package"
+    "all": "run-s build format lint test package"
   },
   "repository": {
     "type": "git",
@@ -30,11 +30,12 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
-    "minimatch": "^5.0.1"
+    "minimatch": "^5.0.1",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "@types/minimatch": "^3.0.5",
     "@types/jest": "^27.4.1",
+    "@types/minimatch": "^3.0.5",
     "@types/node": "^16",
     "@typescript-eslint/parser": "^5.17.0",
     "@vercel/ncc": "^0.33.3",
