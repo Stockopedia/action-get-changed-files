@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "action-get-changed-files",
+  "version": "1.2.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub action to get the changes folders/files between the latest commit, and the previous latest commit",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/Stockopedia/action-get-changed-files.git"
   },
   "keywords": [
     "actions",
