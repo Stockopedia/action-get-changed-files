@@ -13,9 +13,7 @@ jobs:
       - run: npm ci
         name: Install
       - run: npm run all
-        name: Compile Typescript and package
-      - run: npm run test
-        name: Unit tests
+        name: Compile Typescript, run tests and package
       - uses: ./
         name: Test self
         id: get_changed
