@@ -60,8 +60,8 @@ async function run(): Promise<void> {
     )
 
     core.setOutput('changed', result)
-  } catch (error) {
-    core.setFailed(error.message)
+  } catch (error: unknown) {
+    core.setFailed((error as Error).message)
   }
 }
 
