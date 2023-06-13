@@ -14,8 +14,8 @@ export class GithubClient {
       })
 
       return data.files ?? []
-    } catch (e) {
-      throw new GithubCommitsError(e.message)
+    } catch (e: unknown) {
+      throw new GithubCommitsError((e as Error).message)
     }
   }
 }

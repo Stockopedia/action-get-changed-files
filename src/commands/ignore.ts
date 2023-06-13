@@ -1,4 +1,4 @@
-import minimatch from 'minimatch'
+import { minimatch } from 'minimatch'
 import { ICommand, File } from './command';
 
 export class IgnoreCommand implements ICommand {
