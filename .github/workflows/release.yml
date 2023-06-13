@@ -1,24 +1,29 @@
-name: Pull request
+name: Release
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        name: Checkout
       - run: npm ci
         name: Install
       - run: npm run all
         name: Compile Typescript and package
       - run: npm run test
         name: Unit tests
-  run-self:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
       - uses: ./
+        name: Test self
         id: get_changed
         with:
           github-token: ${{ github.token }}
       - name: Echo
         run: echo ${{ steps.get_changed.outputs.changed }}
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npx semantic-release --branches main -p @semantic-release/commit-analyzer -p @semantic-release/release-notes-generator -p @semantic-release/github
