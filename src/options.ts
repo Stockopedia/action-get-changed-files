@@ -1,6 +1,8 @@
 export interface Options {
   foldersOnly?: boolean
+  foldersOnlyAfterFilter?: boolean
   ignore?: string
+  only?: string
   format?: Format
 }
 

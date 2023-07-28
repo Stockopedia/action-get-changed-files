@@ -117,8 +117,14 @@ class CommandFactory {
         else {
             commands.push(new _1.GetFilesCommand());
         }
+        if (options.only) {
+            commands.push(new _1.OnlyCommand(options.only));
+        }
         if (options.ignore) {
             commands.push(new _1.IgnoreCommand(options.ignore));
+        }
+        if (options.foldersOnlyAfterFilter) {
+            commands.push(new _1.GetFoldersCommand());
         }
         commands.push(new deduplicate_1.DeduplicateCommand());
         return commands;
@@ -240,6 +246,7 @@ __exportStar(__nccwpck_require__(4375), exports);
 __exportStar(__nccwpck_require__(1010), exports);
 __exportStar(__nccwpck_require__(3761), exports);
 __exportStar(__nccwpck_require__(7590), exports);
+__exportStar(__nccwpck_require__(5570), exports);
 
 
 /***/ }),
@@ -274,6 +281,27 @@ class NewlineFormatCommand {
     }
 }
 exports.NewlineFormatCommand = NewlineFormatCommand;
+
+
+/***/ }),
+
+/***/ 5570:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OnlyCommand = void 0;
+const minimatch_1 = __nccwpck_require__(1953);
+class OnlyCommand {
+    constructor(only) {
+        this.only = only;
+    }
+    run(files) {
+        return files.filter(x => (0, minimatch_1.minimatch)(x.filename, this.only, { dot: true }));
+    }
+}
+exports.OnlyCommand = OnlyCommand;
 
 
 /***/ }),
@@ -393,14 +421,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.runner = void 0;
+exports.runner = exports.runCommandsOnFiles = void 0;
+const runCommandsOnFiles = (commands, files) => commands
+    .reduce((acc, curr) => {
+    return curr.run(acc);
+}, files)
+    .map(x => x.filename);
+exports.runCommandsOnFiles = runCommandsOnFiles;
 const runner = (context, client, commands, formatter) => __awaiter(void 0, void 0, void 0, function* () {
     const files = yield client.getChangedFiles(context);
-    return formatter.run(commands
-        .reduce((acc, curr) => {
-        return curr.run(acc);
-    }, files)
-        .map(x => x.filename));
+    return formatter.run((0, exports.runCommandsOnFiles)(commands, files));
 });
 exports.runner = runner;
 
