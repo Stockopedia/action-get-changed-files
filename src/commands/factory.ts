@@ -1,6 +1,14 @@
 import { ICommand } from './command';
 import { Format, Options } from '../options';
-import { GetFoldersCommand, GetFilesCommand, IgnoreCommand, CsvFormatCommand, NewlineFormatCommand, JsonFormatCommand } from '.';
+import {
+  GetFoldersCommand,
+  GetFilesCommand,
+  IgnoreCommand,
+  CsvFormatCommand,
+  NewlineFormatCommand,
+  JsonFormatCommand,
+  OnlyCommand,
+} from '.';
 import { DeduplicateCommand } from './deduplicate';
 
 class CommandFactory {
@@ -18,8 +26,15 @@ class CommandFactory {
       commands.push(new GetFilesCommand())
     }
 
+    if(options.only) {
+      commands.push(new OnlyCommand(options.only))
+    }
     if(options.ignore) {
       commands.push(new IgnoreCommand(options.ignore))
+    }
+
+    if(options.foldersOnlyAfterFilter) {
+      commands.push(new GetFoldersCommand())
     }
 
     commands.push(new DeduplicateCommand())

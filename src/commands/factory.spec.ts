@@ -1,5 +1,6 @@
 import { commandFactory, formatFactory } from './factory';
 import { IgnoreCommand } from './ignore';
+import { OnlyCommand } from './only';
 import { GetFilesCommand } from '.';
 import { GetFoldersCommand } from './get-folders';
 import { CsvFormatCommand } from './csv-format';
@@ -12,15 +13,23 @@ describe('command factory', () => {
       ignore: "something"
     }).filter(x => x instanceof IgnoreCommand)).toHaveLength(1)
   })
-  it('should ommit IgnoreCommand when ignore is not specified', () => {
+  it('should omit IgnoreCommand when ignore is not specified', () => {
     expect(commandFactory.make({}).filter(x => x instanceof IgnoreCommand)).toHaveLength(0)
+  })
+  it('should return OnlyCommand when only is specified', () => {
+    expect(commandFactory.make({
+      only: "something"
+    }).filter(x => x instanceof OnlyCommand)).toHaveLength(1)
+  })
+  it('should omit OnlyCommand when only is not specified', () => {
+    expect(commandFactory.make({}).filter(x => x instanceof OnlyCommand)).toHaveLength(0)
   })
   it('should return GetFilesCommand command when foldersOnly is false', () => {
     expect(commandFactory.make({
       foldersOnly: false
     }).filter(x => x instanceof GetFilesCommand)).toHaveLength(1)
   })
-  it('should ommit GetFilesCommand command when foldersOnly is true', () => {
+  it('should omit GetFilesCommand command when foldersOnly is true', () => {
     expect(commandFactory.make({
       foldersOnly: true
     }).filter(x => x instanceof GetFilesCommand)).toHaveLength(0)
@@ -30,9 +39,19 @@ describe('command factory', () => {
       foldersOnly: true
     }).filter(x => x instanceof GetFoldersCommand)).toHaveLength(1)
   })
-  it('should ommit GetFoldersCommand command when foldersOnly is true', () => {
+  it('should omit GetFoldersCommand command when foldersOnly is false', () => {
     expect(commandFactory.make({
       foldersOnly: false
+    }).filter(x => x instanceof GetFoldersCommand)).toHaveLength(0)
+  })
+  it('should return GetFoldersCommand command when foldersOnlyAfterFilter is true', () => {
+    expect(commandFactory.make({
+      foldersOnlyAfterFilter: true
+    }).filter(x => x instanceof GetFoldersCommand)).toHaveLength(1)
+  })
+  it('should omit GetFoldersCommand command when foldersOnlyAfterFilter is false', () => {
+    expect(commandFactory.make({
+      foldersOnlyAfterFilter: false
     }).filter(x => x instanceof GetFoldersCommand)).toHaveLength(0)
   })
 })
